@@ -2,6 +2,7 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import React, { useEffect, useState } from "react";
+import Weights from "@/components/Weights";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,8 +15,8 @@ export default function Home() {
   const preSetValues = {
     sets: 5,
     weightIncrease: 0.1,
-    maxReps: 10,
-    minReps: 6,
+    minReps: 8,
+    maxReps: 12,
   };
 
   useEffect(() => {
@@ -113,37 +114,59 @@ export default function Home() {
         <div>
           {/* List of parameters */}
           {/* Current weight */}
+          <label
+            className="block text-sm font-medium leading-6 text-gray-900"
+            htmlFor="weight"
+          >
+            Weight per set:
+          </label>
           <input
-            value={weight}
+            // value={weight}
+            className="block w-full rounded-md border-0 py-1.5 pl-3 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mb-3"
             onChange={(e) => setWeight(Number(e.target.value))}
             type="number"
             id="weight"
           ></input>
-          <label htmlFor="weight">Weight per set:</label>
           {currentSets.map((set, index) => {
             return (
               <div key={index}>
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  {" "}
+                  Set {index + 1}
+                </label>
                 <input
-                  ref={set}
+                  className="block w-full rounded-md border-0 py-1.5 pl-3 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mb-3"
                   type="number"
                   value={set}
                   onChange={(e) => handleSetChange(e, index)}
                 ></input>
-                <label> Set {index + 1}</label>;
               </div>
             );
           })}
-          <button onClick={handleCalculateClick}>Calculate</button>
-          {/* New weight */}
-          <ul>
-            {!!calculatedWeight && (
-              <li>Calculated Weight: {calculatedWeight}</li>
-            )}
-            {!!calculatedWeight &&
-              calculatedSets.map((set, index) => {
-                return <li key={index}>Set: {set}</li>;
-              })}
-          </ul>
+          <button
+            className="border p-2 rounded-md bg-slate-500 text-white mt-3"
+            onClick={handleCalculateClick}
+          >
+            Calculate
+          </button>
+          <div>
+            <div>
+              {/* New weight */}
+              <ul>
+                {!!calculatedWeight && (
+                  <li>Calculated Weight: {calculatedWeight}</li>
+                )}
+                {!!calculatedWeight &&
+                  calculatedSets.map((set, index) => {
+                    return <li key={index}>Set: {set}</li>;
+                  })}
+              </ul>
+            </div>
+            <div className="mt-5">
+              <h3>Plate Calculator</h3>
+              <Weights weight={calculatedWeight} />
+            </div>
+          </div>
         </div>
       </main>
     </>
