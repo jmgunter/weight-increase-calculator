@@ -57,27 +57,16 @@ export default function Home() {
       i++;
     }
 
-    console.log({ newWeight, totalReps });
-
     const remainder = totalReps % preSetValues.sets;
     const newSets = Array(preSetValues.sets).fill(
       Math.floor(totalReps / preSetValues.sets)
     );
 
     for (let i = 0; i < remainder; i++) {
-      console.log(`i: ${i}`);
-
       newSets[i] = newSets[i] + 1;
     }
 
-    console.log(`remainder: ${remainder}`);
-    console.log(`newSets: ${newSets}`);
-
-    // // Calculate new sets
-    // const newSets = Array(preSetValues.sets).fill();
-    // Set new sets
     setCalculatedSets(newSets);
-    // Set new weight
     setCalculatedWeight(newWeight);
   }
 
@@ -88,15 +77,12 @@ export default function Home() {
       (accumulator, currentValue) => currentValue * weight + accumulator,
       0
     );
-    console.log(currentSets, volume);
     // Calculate new volume based on weight increase
     const newVolume = volume * (1 + preSetValues.weightIncrease);
-    // Calculate new weight and reps based on new volume, accounting for max reps and min reps
-    console.log({ newVolume });
     calculateNewSets(newVolume);
   }
 
-  // Function for focusing the next input field when the user presses enter
+  // TODO: Function for focusing the next input field when the user presses enter
   function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {}
 
   return (
