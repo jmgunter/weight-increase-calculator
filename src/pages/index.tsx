@@ -110,7 +110,6 @@ export default function Home() {
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
         <div>
-          {/* List of parameters */}
           {/* Current weight */}
           <label
             className="block text-sm font-medium leading-6 text-gray-900"
@@ -119,7 +118,6 @@ export default function Home() {
             Weight per set:
           </label>
           <input
-            // value={weight}
             className="block w-full rounded-md border py-1.5 pl-3 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mb-3"
             onChange={(e) => setWeight(Number(e.target.value))}
             type="number"
@@ -147,10 +145,10 @@ export default function Home() {
           >
             Calculate
           </button>
-          <div>
+          {/* New weight */}
+          {!!calculatedWeight && (
             <div>
-              {/* New weight */}
-              {calculatedWeight && (
+              <div>
                 <div>
                   <p className="text-sm">
                     Old volume: <span>{oldVolume}</span>
@@ -169,13 +167,14 @@ export default function Home() {
                     })}
                   </ul>
                 </div>
-              )}
+              </div>
+
+              <div className="mt-5">
+                <h3>Plate Calculator</h3>
+                <Weights weight={calculatedWeight} />
+              </div>
             </div>
-            <div className="mt-5">
-              <h3>Plate Calculator</h3>
-              <Weights weight={calculatedWeight} />
-            </div>
-          </div>
+          )}
         </div>
       </main>
     </>
