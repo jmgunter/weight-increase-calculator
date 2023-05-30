@@ -11,6 +11,9 @@ export default function Home() {
   const [calculatedWeight, setCalculatedWeight] = useState<number>(0);
   const [currentSets, setCurrentSets] = useState<any[]>([]);
   const [calculatedSets, setCalculatedSets] = useState<any[]>([]);
+  const [oldVolume, setOldVolume] = useState<number>(0);
+  const [targetVolume, setTargetVolume] = useState<number>(0);
+  const [newVolume, setNewVolume] = useState<number>(0);
 
   const preSetValues = {
     sets: 5,
@@ -36,6 +39,7 @@ export default function Home() {
   function calculateNewSets(volume: number) {
     // Calculate a new weight and number of reps based on the current volume
     // Calculate new reps
+
     const maxTotalReps = preSetValues.maxReps * preSetValues.sets;
     const minTotalReps = preSetValues.minReps * preSetValues.sets;
 
@@ -68,18 +72,26 @@ export default function Home() {
 
     setCalculatedSets(newSets);
     setCalculatedWeight(newWeight);
+    setNewVolume(newSets.reduce((a, b) => a + b, 0) * newWeight);
   }
 
   // Calculate new weight
   function handleCalculateClick() {
     // Calculate current volume
-    const volume = currentSets.reduce(
-      (accumulator, currentValue) => currentValue * weight + accumulator,
-      0
+    setOldVolume(
+      currentSets.reduce(
+        (accumulator, currentValue) => currentValue * weight + accumulator,
+        0
+      )
     );
-    // Calculate new volume based on weight increase
-    const newVolume = volume * (1 + preSetValues.weightIncrease);
-    calculateNewSets(newVolume);
+    setOldVolume((oldV) => {
+      setTargetVolume(Math.round(oldV * (1 + preSetValues.weightIncrease)));
+      setTargetVolume((newV) => {
+        calculateNewSets(newV);
+        return newV;
+      });
+      return oldV;
+    });
   }
 
   // TODO: Function for focusing the next input field when the user presses enter
@@ -130,7 +142,7 @@ export default function Home() {
             );
           })}
           <button
-            className="border p-2 rounded-md bg-slate-500 text-white mt-3"
+            className="border p-2 rounded-md bg-slate-500 text-white mt-3 mb-5"
             onClick={handleCalculateClick}
           >
             Calculate
@@ -138,15 +150,26 @@ export default function Home() {
           <div>
             <div>
               {/* New weight */}
-              <ul>
-                {!!calculatedWeight && (
-                  <li>Calculated Weight: {calculatedWeight}</li>
-                )}
-                {!!calculatedWeight &&
-                  calculatedSets.map((set, index) => {
-                    return <li key={index}>Set: {set}</li>;
-                  })}
-              </ul>
+              {calculatedWeight && (
+                <div>
+                  <p className="text-sm">
+                    Old volume: <span>{oldVolume}</span>
+                  </p>
+                  <p className="text-sm">
+                    Target volume ({preSetValues.weightIncrease}):{" "}
+                    <span>{targetVolume}</span>
+                  </p>
+                  <p className="text-sm">
+                    New volume: <span>{newVolume}</span>
+                  </p>
+                  <ul className="mt-5">
+                    <li>Calculated Weight: {calculatedWeight}</li>
+                    {calculatedSets.map((set, index) => {
+                      return <li key={index}>Set: {set}</li>;
+                    })}
+                  </ul>
+                </div>
+              )}
             </div>
             <div className="mt-5">
               <h3>Plate Calculator</h3>
