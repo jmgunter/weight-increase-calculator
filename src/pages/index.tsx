@@ -47,18 +47,23 @@ export default function Home() {
     let totalReps = Math.round(volume / weight);
     let i = 0;
 
-    while (totalReps > maxTotalReps || (totalReps < minTotalReps && i < 100)) {
-      console.log(
-        `totalReps: ${totalReps}, maxTotalReps: ${maxTotalReps}, minTotalReps: ${minTotalReps}, newWeight: ${newWeight}`
-      );
+    if (newWeight > 1) {
+      while (
+        totalReps > maxTotalReps ||
+        (totalReps < minTotalReps && i < 100)
+      ) {
+        console.log(
+          `totalReps: ${totalReps}, maxTotalReps: ${maxTotalReps}, minTotalReps: ${minTotalReps}, newWeight: ${newWeight}`
+        );
 
-      if (totalReps > maxTotalReps) {
-        newWeight = newWeight + 5;
-      } else if (totalReps < minTotalReps) {
-        newWeight = newWeight - 5;
+        if (totalReps > maxTotalReps) {
+          newWeight = newWeight + 5;
+        } else if (totalReps < minTotalReps) {
+          newWeight = newWeight - 5;
+        }
+        totalReps = Math.round(volume / newWeight);
+        i++;
       }
-      totalReps = Math.round(volume / newWeight);
-      i++;
     }
 
     const remainder = totalReps % preSetValues.sets;
