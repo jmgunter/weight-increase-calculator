@@ -3,10 +3,18 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import React, { useEffect, useState } from "react";
 import Weights from "@/components/Weights";
+import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const preSetValues = {
+    sets: 5,
+    weightIncrease: 0.07,
+    minReps: 8,
+    maxReps: 12,
+  };
+
   const [weight, setWeight] = useState<number>(0);
   const [calculatedWeight, setCalculatedWeight] = useState<number>(0);
   const [currentSets, setCurrentSets] = useState<any[]>([]);
@@ -14,13 +22,6 @@ export default function Home() {
   const [oldVolume, setOldVolume] = useState<number>(0);
   const [targetVolume, setTargetVolume] = useState<number>(0);
   const [newVolume, setNewVolume] = useState<number>(0);
-
-  const preSetValues = {
-    sets: 5,
-    weightIncrease: 0.1,
-    minReps: 8,
-    maxReps: 12,
-  };
 
   useEffect(() => {
     // On page load set current sets to preset value
@@ -114,6 +115,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
+        {/* @TODO */}
+        {/* <Header /> */}
         <div>
           {/* Current weight */}
           <label
@@ -159,7 +162,8 @@ export default function Home() {
                     Old volume: <span>{oldVolume}</span>
                   </p>
                   <p className="text-sm">
-                    Target volume ({preSetValues.weightIncrease}):{" "}
+                    Target volume (
+                    {Math.round(preSetValues.weightIncrease * 100) + "%"}):{" "}
                     <span>{targetVolume}</span>
                   </p>
                   <p className="text-sm">
