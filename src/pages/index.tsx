@@ -4,6 +4,7 @@ import styles from "@/styles/Home.module.css";
 import React, { useEffect, useState } from "react";
 import Weights from "@/components/Weights";
 import Header from "@/components/Header";
+import SetInput from "@/components/SetInput";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -129,22 +130,16 @@ export default function Home() {
             className="block w-full rounded-md border py-1.5 pl-3 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mb-3"
             onChange={(e) => setWeight(Number(e.target.value))}
             type="number"
-            id="weight"
+            id="weightInput"
           ></input>
           {currentSets.map((set, index) => {
             return (
-              <div key={index}>
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  {" "}
-                  Set {index + 1}
-                </label>
-                <input
-                  className="block w-full rounded-md border border-slate py-1.5 pl-3 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mb-3"
-                  type="number"
-                  value={set}
-                  onChange={(e) => handleSetChange(e, index)}
-                ></input>
-              </div>
+              <SetInput
+                key={index}
+                set={set}
+                index={index}
+                handleSetChange={handleSetChange}
+              />
             );
           })}
           <button
@@ -159,15 +154,15 @@ export default function Home() {
               <div>
                 <div>
                   <p className="text-sm">
-                    Old volume: <span>{oldVolume}</span>
+                    Old volume: <span id="oldVolume">{oldVolume}</span>
                   </p>
                   <p className="text-sm">
                     Target volume (
                     {Math.round(preSetValues.weightIncrease * 100) + "%"}):{" "}
-                    <span>{targetVolume}</span>
+                    <span id="targetVolume">{targetVolume}</span>
                   </p>
                   <p className="text-sm">
-                    New volume: <span>{newVolume}</span>
+                    New volume: <span id="newVolume">{newVolume}</span>
                   </p>
                   <ul className="mt-5">
                     <li>Calculated Weight: {calculatedWeight}</li>
