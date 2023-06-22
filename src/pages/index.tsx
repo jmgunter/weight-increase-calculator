@@ -35,6 +35,10 @@ export default function Home() {
   ) {
     const updatedSets = [...currentSets];
     updatedSets[index] = Number(e.target.value);
+    // Set all sets below the current one to the same value
+    for (let i = index + 1; i < updatedSets.length; i++) {
+      updatedSets[i] = Number(e.target.value);
+    }
     setCurrentSets(updatedSets);
   }
 
