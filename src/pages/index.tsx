@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   const preSetValues = {
     sets: 5,
-    weightIncrease: 0.07,
+    weightIncrease: 0.04,
     minReps: 8,
     maxReps: 12,
   };
@@ -63,7 +63,9 @@ export default function Home() {
         );
 
         if (totalReps > maxTotalReps) {
-          newWeight = newWeight + 5;
+          // Set new weight to lowest reps with a 5 lbs increment
+          newWeight = volume / (preSetValues.sets * preSetValues.minReps);
+          newWeight = Math.round(newWeight / 5) * 5;
         } else if (totalReps < minTotalReps) {
           newWeight = newWeight - 5;
         }
