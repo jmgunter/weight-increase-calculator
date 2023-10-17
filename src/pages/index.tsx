@@ -12,8 +12,8 @@ export default function Home() {
   const preSetValues = {
     sets: 5,
     weightIncrease: 0.04,
-    minReps: 8,
-    maxReps: 12,
+    minReps: 9,
+    maxReps: 11,
   };
 
   const [weight, setWeight] = useState<number>(0);
@@ -64,8 +64,9 @@ export default function Home() {
 
         if (totalReps > maxTotalReps) {
           // Set new weight to lowest reps with a 5 lbs increment
+          // newWeight = newWeight + 10;
           newWeight = volume / (preSetValues.sets * preSetValues.minReps);
-          newWeight = Math.round(newWeight / 5) * 5;
+          newWeight = Math.floor(newWeight / 5) * 5;
         } else if (totalReps < minTotalReps) {
           newWeight = newWeight - 5;
         }
