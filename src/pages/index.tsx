@@ -63,10 +63,10 @@ export default function Home() {
         );
 
         if (totalReps > maxTotalReps) {
-          // Set new weight to lowest reps with a 5 lbs increment
-          // newWeight = newWeight + 10;
-          newWeight = volume / (preSetValues.sets * preSetValues.minReps);
-          newWeight = Math.floor(newWeight / 5) * 5;
+          // Set new weight with a 10 lbs increase
+          newWeight = newWeight + 10;
+          // newWeight = volume / (preSetValues.sets * preSetValues.minReps);
+          // newWeight = Math.floor(newWeight / 5) * 5;
         } else if (totalReps < minTotalReps) {
           newWeight = newWeight - 5;
         }
