@@ -1,0 +1,38 @@
+@media screen and (max-width: var(--break-mobile)) {
+  .sideBar {
+    display: none;
+  }
+  .container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.container {
+  display: grid;
+  background-color: red;
+  color: white;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: 40px 1fr 100px;
+  gap: 10px;
+  height: 100vh;
+  padding: 10px;
+}
+.gridItem {
+  padding: 10px;
+  background-color: blue;
+}
+.header {
+  border: 1px solid white;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.sideBar {
+  border: 1px solid white;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+.footer {
+  border: 1px solid white;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
